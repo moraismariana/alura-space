@@ -22,8 +22,8 @@
             <img src="{% static '/assets/logo/Logo(2).png' %}" alt="Logo da Alura Space" />
             <div class="cabecalho__busca">
                 <div class="busca__fundo">
-                    <form action="{% url 'buscar' %}">
-                        <input class="busca__input" type="text" name="buscar" placeholder="O que você procura?">
+                    <form action="{% url 'pesquisa' %}">
+                        <input class="busca__input" type="text" name="pesquisa" placeholder="O que você procura?">
                         <button type="submit">
                             <img class="busca__icone" src="{% static '/assets/ícones/1x/search.png' %}" alt="ícone de search">
                         </button>
@@ -42,17 +42,16 @@
             </section>
             <section class="galeria" style="margin-left: 5em">
                 <form action="" method="">
+                    {% csrf_token %}
                     <div class="row">
-                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
-                            <label for="nome_login" style="color:#D9D9D9; margin-bottom: 5px;"><b>Nome de Login</b></label>
-                            <input type="text" class="form-control" name="nome_login" placeholder="Ex.: João Silva" required>
+                        {% for field in form.visible_fields %}
+                        <div class="col-12 col-lg-6" style="margin-bottom: 10px">
+                            <label for="{{ field.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{ field.label }}</label>
+                            {{ field }}
                         </div>
-                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
-                            <label for="password" style="color:#D9D9D9; margin-bottom: 5px;"><b>Senha</b></label>
-                            <input type="password" class="form-control" name="password" placeholder="Digite sua senha" required>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button class="btn btn-success col-12" style="padding: top 5px;" type="submit">Login</button>
+                        {% endfor %}
+                        <div>
+                            <button class="btn btn-success col-12" style="padding: top 5px" type="submit">Logar</button>
                         </div>
                     </div>
                 </form>
